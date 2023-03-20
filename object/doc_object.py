@@ -398,3 +398,26 @@ def latest_inbox5(driver) -> WebElement:
     return driver.find_element(
         By.XPATH,
         "/html/body/div[1]/div[2]/div[2]/div[12]/div/div[3]/div/div/div/div[10]/div[3]/div/span")
+
+
+def check_materai(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/div[12]/div[1]/div/label/span"
+    )
+
+
+def select_document_type(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//select[@name='document_Type']")
+
+
+def button_add_meterai(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='addMeteraiBtn']")
+
+
+def kotak_materai(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='imgmet-1']")
+
+
+def button_lock_meterai(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='lockmet1']")

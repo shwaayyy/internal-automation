@@ -374,6 +374,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
     iteration = kwargs.get('iteration', 1)
     is_not_seal = kwargs.get('is_not_seal', True)
     is_used = kwargs.get('is_draft', False)
+    meterai = kwargs.get('meterai', False)
     size = kwargs.get('size', [-100, -65])
     pos = kwargs.get('pos', [80, 90])
 
@@ -394,6 +395,10 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
 
             if is_not_seal is True:
                 doc.check_seal_doc(driver).click()
+
+            if meterai:
+                doc.check_materai(driver).click()
+                Select(doc.select_document_type(driver)).select_by_visible_text()
 
             doc.name_first_receiver(driver).send_keys("digisign")
             doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")

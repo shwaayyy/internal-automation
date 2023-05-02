@@ -395,19 +395,26 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
 
             if is_not_seal is True:
                 doc.check_seal_doc(driver).click()
+            else:
+                Select(doc.select_email_seal(driver)).select_by_visible_text("wahyu@digi-id.id")
 
             if meterai:
                 doc.check_materai(driver).click()
-                Select(doc.select_document_type(driver)).select_by_visible_text()
+                Select(doc.select_document_type(driver)).select_by_visible_text("Surat Pernyataan")
 
             doc.name_first_receiver(driver).send_keys("digisign")
-            doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")
+            doc.email_first_receiver(driver).send_keys("dstest1@tandatanganku.com")
 
         doc.btn_detail_doc(driver).click()
         delay(2)
         doc.btn_add_sign(driver).click()
 
         delay(4)
+
+        if meterai:
+            doc.button_add_meterai(driver).click()
+            ActionChains(driver).drag_and_drop_by_offset(doc.kotak_materai(driver), pos[0], pos[1]).perform()
+            doc.button_lock_meterai(driver).click()
 
         ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
         ActionChains(driver).drag_and_drop_by_offset(doc.resizing_zone_1(driver), size[0], size[1]).perform()
@@ -478,11 +485,11 @@ def test_web2_9(driver):
 
 def test_web2_10(driver):
     """Menyelesaikan Proses Dokumen dengan benar"""
-    test_web2_6_1(driver, pos=[0, 0], size=[0, 0])
+    test_web2_6_1(driver, meterai=True, iteration=15)
 
 
 def test_web2_11(driver):
-    """Dokumen yang berhasil di request akan mengirim notif"""
+    """Document yang berhasil di request akan mengirim notif"""
     test_web2_6_1(driver, pos=[0, 0], size=[0, 0])
     time_after_test = datetime.now()
 

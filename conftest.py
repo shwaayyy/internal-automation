@@ -14,7 +14,7 @@ url = {
     "test": "https://app.tandatanganku.com",
     "mail-testing": "https://mail.tandatanganku.com",
     "mail-digi": "https://mail.digi-id.id",
-    "dummy": "https://www.jetbrains.com/"
+    "devkube": "https://devkube.tandatanganku.com",
 }
 
 
@@ -50,7 +50,7 @@ def driver():
 
     browser.maximize_window()
     browser.implicitly_wait(20)
-    browser.get(url["test"])
+    browser.get(url["devkube"])
 
     yield browser
 

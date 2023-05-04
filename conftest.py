@@ -17,7 +17,6 @@ url = {
     "devkube": "https://devkube.tandatanganku.com",
 }
 
-
 qa_team = {
     "wahyu": "Wahyu Hidayat",
     "aisy": "Rohadatul Aisy",

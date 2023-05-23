@@ -41,15 +41,14 @@ def driver_manager(driver):
         return webdriver.Firefox()
 
 
-# How to run the test you can run with CLI: pytest --html=reports/report_reg_wna.html --self-contained-html
-# <test_case_file>.py
+# How to run test you can run with CLI: pytest --html=reports/test_report.html --self-contained-html <test_case_file>.py
 @pytest.fixture
 def driver():
     browser = driver_manager("chrome")
 
     browser.maximize_window()
     browser.implicitly_wait(20)
-    browser.get(url["devkube"])
+    browser.get(url["test"])
 
     yield browser
 

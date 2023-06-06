@@ -421,3 +421,14 @@ def kotak_materai(driver) -> WebElement:
 
 def button_lock_meterai(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='lockmet1']")
+
+
+def check_materai_personal_acc(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/div[10]/div[1]/div/label"
+    )
+
+
+def swal_kinddoc(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//div[contains(@tabindex, '-1')]")

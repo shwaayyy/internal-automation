@@ -32,7 +32,7 @@ def test_web1_1(driver, **kwargs):
 
     delay(3)
     if is_pdf == "pdf":
-        form.doc_file(driver).send_keys("D:\\repository\\try\\PyTest-dev\\src\\file\\report.pdf")
+        form.doc_file(driver).send_keys("\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file\\report.pdf")
     else:
         form.doc_file(driver).send_keys("D:\\repository\\try\\PyTest-dev\\src\\file\\image.jpeg")
     delay(4)
@@ -368,7 +368,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("D:\\repository\\try\\PyTest-dev\\src\\file\\report.pdf")
+            form.doc_file(driver).send_keys("\\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file\\report.pdf")
             delay(2)
             form.doc_submit(driver).click()
             delay(2)
@@ -376,11 +376,11 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
             if is_not_seal is True:
                 doc.check_seal_doc(driver).click()
             else:
-                Select(doc.select_email_seal(driver)).select_by_visible_text("wahyu@digi-id.id")
+                Select(doc.select_email_seal(driver)).select_by_value("wahyu@digi-id.id")
 
             if meterai:
                 doc.check_materai(driver).click()
-                Select(doc.select_document_type(driver)).select_by_visible_text("Surat Pernyataan")
+                Select(doc.select_document_type(driver)).select_by_value("4b")
 
             doc.name_first_receiver(driver).send_keys("digisign")
             doc.email_first_receiver(driver).send_keys("dstest1@tandatanganku.com")
@@ -473,4 +473,3 @@ def test_bulk_send(driver):
 def test_send_doc_meterai(driver):
     """Send document with meterai"""
     test_web2_6_1(driver, meterai=True)
-

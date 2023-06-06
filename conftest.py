@@ -1,5 +1,5 @@
 import base64
-import pyautogui
+# import pyautogui
 import pytest
 import time
 
@@ -23,7 +23,7 @@ qa_team = {
     "latifah": "Latiah Ramadhana M.E."
 }
 
-robot = pyautogui
+# robot = pyautogui
 
 
 def delay(sec):
@@ -31,17 +31,17 @@ def delay(sec):
 
 
 def driver_manager(driver):
-    if driver is "chrome":
+    if driver == "chrome":
         options = Options()
         options.add_argument('--use-fake-ui-for-media-stream')
         options.add_experimental_option("useAutomationExtension", False)
         # options.add_argument('--use-fake-device-for-media-stream')
         return webdriver.Chrome(options=options)
-    elif driver is "firefox":
+    elif driver == "firefox":
         return webdriver.Firefox()
 
 
-# How to run test you can run with CLI: pytest --html=reports/test_report.html --self-contained-html <test_case_file>.py
+# How to run test you can run with CLI: pytest --html=reports/test_report.html --self-contained-html test.py
 @pytest.fixture
 def driver():
     browser = driver_manager("chrome")

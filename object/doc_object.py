@@ -18,6 +18,18 @@ def check_seal_doc(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//label[.//*[@id='ckseal']]")
 
 
+def select_email_seal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//select[@id='seal']")
+
+
+def seal_zone(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='seal_zone']")
+
+
+def button_lockseal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='lockseal']")
+
+
 def nav_inbox(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//li[.//i[@class='ti-write']]")
 
@@ -303,20 +315,8 @@ def btn_lihat_file_draf(driver) -> WebElement:
         By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[12]/div/div/div/div/div/div/div[2]/div[3]/btn[2]")
 
 
-def sign_null(driver) -> WebElement:
+def swal(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='swal2-content']")
-
-
-def select_email_seal(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//select[@id='seal']")
-
-
-def imgsealer(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='imgsealer']")
-
-
-def button_lockseal(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='lockseal']")
 
 
 def kotak_masuk_terakhir(driver) -> WebElement:
@@ -401,10 +401,7 @@ def latest_inbox5(driver) -> WebElement:
 
 
 def check_materai(driver) -> WebElement:
-    return driver.find_element(
-        By.XPATH,
-        "/html/body/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/div[12]/div[1]/div/label/span"
-    )
+    return driver.find_element(By.XPATH, "//label[.//*[@id='checkemet']]")
 
 
 def select_document_type(driver) -> WebElement:
@@ -415,12 +412,20 @@ def button_add_meterai(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='addMeteraiBtn']")
 
 
-def kotak_materai(driver) -> WebElement:
+def meterai_zone1(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='imgmet-1']")
 
 
-def button_lock_meterai(driver) -> WebElement:
+def meterai_zone2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='imgmet-2']")
+
+
+def button_lock_meterai1(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='lockmet1']")
+
+
+def button_lock_meterai2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='lockmet2']")
 
 
 def check_materai_personal_acc(driver) -> WebElement:
@@ -432,3 +437,13 @@ def check_materai_personal_acc(driver) -> WebElement:
 
 def swal_kinddoc(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//div[contains(@tabindex, '-1')]")
+
+
+def cancel_meterai1(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='met1']")
+
+
+def cancel_meterai2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='met2']")
+
+

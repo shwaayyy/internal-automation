@@ -6,7 +6,7 @@
 #     """Penentuan lokasi segel pada dokumen"""
 #     test_web2_5_1(driver)
 #
-#     ActionChains(driver).drag_and_drop_by_offset(doc.imgsealer(driver), 100, 100).perform()
+#     ActionChains(driver).drag_and_drop_by_offset(doc.seal_zone(driver), 100, 100).perform()
 #     delay(3)
 #
 #     doc.button_lockseal(driver).click()

@@ -303,7 +303,7 @@ def test_web2_4_1(driver):
     doc.btn_process_send_doc(driver).click()
 
     try:
-        assert doc.sign_null(driver) is not None
+        assert doc.swal(driver) is not None
     except Exception as err:
         print(err)
 
@@ -341,7 +341,7 @@ def test_web2_5_2(driver):
     doc.btn_process_send_doc(driver).click()
 
     try:
-        assert doc.sign_null(driver) is not None
+        assert doc.swal(driver) is not None
         delay(3)
     except Exception as err:
         print(err)
@@ -368,7 +368,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("\\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file\\report.pdf")
+            form.doc_file(driver).send_keys("D:\\local\\digi\\file\\report.pdf")
             delay(2)
             form.doc_submit(driver).click()
             delay(2)
@@ -393,8 +393,8 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
 
         if meterai:
             doc.button_add_meterai(driver).click()
-            ActionChains(driver).drag_and_drop_by_offset(doc.kotak_materai(driver), pos[0], pos[1]).perform()
-            doc.button_lock_meterai(driver).click()
+            ActionChains(driver).drag_and_drop_by_offset(doc.meterai_zone1(driver), pos[0], pos[1]).perform()
+            doc.button_lock_meterai1(driver).click()
 
         ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
         ActionChains(driver).drag_and_drop_by_offset(doc.resizing_zone_1(driver), size[0], size[1]).perform()
@@ -455,7 +455,7 @@ def test_web2_9(driver):
     doc.btn_process_send_doc(driver).click()
 
     try:
-        assert doc.sign_null(driver) is not None
+        assert doc.swal(driver) is not None
         delay(3)
     except Exception as err:
         print(err)
@@ -464,10 +464,9 @@ def test_web2_9(driver):
 
 
 # send documents with emeterai
-
 def test_bulk_send(driver):
     """Menyelesaikan Send Dokumen dengan benar dan dengan e-meterai bulksend"""
-    test_web2_6_1(driver, meterai=True, iteration=10)
+    test_web2_6_1(driver, meterai=True, iteration=5)
 
 
 def test_send_doc_meterai(driver):

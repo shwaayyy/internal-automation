@@ -14,6 +14,10 @@ def choose_account(driver) -> WebElement:
     return driver.find_element(By.XPATH, "/html/body/div/div/div/div/section/form/a[1]/div")
 
 
+def choose_account_personal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "/html/body/div/div/div/div/section/form/a[3]/div")
+
+
 def check_seal_doc(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//label[.//*[@id='ckseal']]")
 
@@ -23,7 +27,7 @@ def select_email_seal(driver) -> WebElement:
 
 
 def seal_zone(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='seal_zone']")
+    return driver.find_element(By.XPATH, "//*[@id='imgsealer']")
 
 
 def button_lockseal(driver) -> WebElement:
@@ -32,6 +36,17 @@ def button_lockseal(driver) -> WebElement:
 
 def nav_inbox(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//li[.//i[@class='ti-write']]")
+
+
+def nav_doc(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/a/span")
+
+
+def date_send_doc1(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div[3]/div/div/div/div[3]/div/div/div/div/table/tbody/tr[1]/td"
+    )
 
 
 def kotak_masuk(driver) -> WebElement:
@@ -317,6 +332,7 @@ def btn_lihat_file_draf(driver) -> WebElement:
 
 def swal(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='swal2-content']")
+
 
 
 def kotak_masuk_terakhir(driver) -> WebElement:

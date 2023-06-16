@@ -446,7 +446,7 @@ def test_web2_9(driver):
     doc.btn_detail_doc(driver).click()
 
     doc.btn_add_sign(driver).click()
-    ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), 700, 200).perform()
+    ActionChains(driver).drag_and_drop_by_offset(doc.seal_zone(driver), 700, 200).perform()
     delay(2)
 
     doc.lock_sign_1(driver).click()

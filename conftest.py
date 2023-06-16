@@ -23,6 +23,7 @@ qa_team = {
     "latifah": "Latiah Ramadhana M.E."
 }
 
+
 # robot = pyautogui
 
 
@@ -41,27 +42,6 @@ def driver_manager(driver):
         return webdriver.Firefox()
 
 
-# How to run test you can run with CLI: pytest --html=reports/test_report.html --self-contained-html test.py
-@pytest.fixture
-def driver():
-    browser = driver_manager("chrome")
-
-    browser.maximize_window()
-    browser.implicitly_wait(20)
-    browser.get(url["test"])
-
-    yield browser
-
-    browser.close()
-
-
-def pytest_configure(config):
-    config._metadata.update({
-        'PIC': qa_team["wahyu"],
-        'Time Test': datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-    })
-
-
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item):
     outcome = yield
@@ -77,3 +57,24 @@ def pytest_runtest_makereport(item):
             print("Couldn't get screenshot")
             print(e)
         report.extra = extra
+
+
+def pytest_html_report_title(report):
+    report.title = "Automation Report"
+
+
+# How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html test.py
+@pytest.fixture
+def driver():
+    browser = driver_manager("chrome")
+
+    browser.maximize_window()
+    browser.implicitly_wait(20)
+    browser.get(url["test"])
+
+    yield browser
+
+    browser.close()
+
+
+

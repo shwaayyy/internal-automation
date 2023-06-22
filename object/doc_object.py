@@ -54,8 +54,16 @@ def kotak_masuk(driver) -> WebElement:
         By.XPATH, "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/ul/li[3]/a")
 
 
-def name_first_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='name-1']")
+def button_add_receiver(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='add_re']")
+
+
+def name_receiver(driver, sort: int) -> WebElement:
+    return driver.find_element(By.XPATH, f"//*[@id='name-{sort}']")
+
+
+def email_receiver(driver, sort: int) -> WebElement:
+    return driver.find_element(By.XPATH, f"//*[@id='email-{sort}']")
 
 
 def btn_detail_doc(driver) -> WebElement:
@@ -107,10 +115,6 @@ def sign_all_btn(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[@id='signnow']")
 
 
-def email_first_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='email-1']")
-
-
 def proses_btn(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[contains(@class, 'swal2-confirm')]")
 
@@ -125,6 +129,10 @@ def check_doc2(driver) -> WebElement:
 
 def check_doc3(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//label[@for='checkbox3']")
+
+
+def select_action(driver, sort: int):
+    return driver.find_element(By.XPATH, f"//select[@id='ck{sort}']")
 
 
 def check_doc4(driver) -> WebElement:
@@ -233,18 +241,6 @@ def select_action_need_2(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//select[@id='ck2']")
 
 
-def button_add_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='add_re']")
-
-
-def input_name_receiver_2(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='name-2']")
-
-
-def input_email_receiver_2(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='email-2']")
-
-
 def canvas(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='pdf-canvas']")
 
@@ -293,6 +289,13 @@ def button_paraf(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[contains(@onclick, 'adds_init()')]")
 
 
+def btn_set_email_paraf(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[16]/div[1]/div/div/div/div/div[3]/button"
+    )
+
+
 def paraf_box(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='imginit-1']")
 
@@ -334,7 +337,6 @@ def swal(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='swal2-content']")
 
 
-
 def kotak_masuk_terakhir(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//div[@data-target='#demo1']")
 
@@ -369,9 +371,10 @@ def swal_otp_none(driver) -> WebElement:
 
 
 def second_tandatangan(driver) -> WebElement:
-    return driver.find_element \
-        (By.XPATH,
-         "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[4]/div[3]/div/span")
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[4]/div[3]/div/span"
+    )
 
 
 def third_tandatangan(driver) -> WebElement:
@@ -461,5 +464,4 @@ def cancel_meterai1(driver) -> WebElement:
 
 def cancel_meterai2(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='met2']")
-
 

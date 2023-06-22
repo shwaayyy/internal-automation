@@ -1,5 +1,9 @@
 from datetime import datetime
-from typing import Union
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
 from conftest import url, delay
 
 from selenium.webdriver import Keys, ActionChains
@@ -13,7 +17,15 @@ mail = mail_object
 url_mail = url["mail-testing"]
 url_staging = url["test"]
 
-credentials = [{
+act_kind = {
+    "1": "sign",
+    "2": "initials",
+    "3": "approval",
+    "4": "share"
+}
+
+credentials = [
+    {
         "username": "dstest1@tandatanganku.com",
         "password": "123456789!",
         "pass-email": "dstest123"
@@ -158,7 +170,7 @@ def test_add_new_receiver(driver):
 
     doc.button_add_receiver(driver).click()
 
-    assert doc.input_email_receiver_2(driver) is not None
+    assert doc.email_receiver(driver, 2) is not None
     delay(3)
 
 
@@ -259,8 +271,8 @@ def test_choose_location_sign(driver):
     test_doc_upload(driver)
 
     doc.button_add_me(driver).click()
-    doc.email_first_receiver(driver).clear()
-    doc.email_first_receiver(driver).send_keys("dstest1@tandatanganku.com")
+    doc.email_receiver(driver, 1).clear()
+    doc.email_receiver(driver, 1).send_keys("dstest1@tandatanganku.com")
 
     doc.btn_detail_doc(driver).click()
     doc.btn_add_sign(driver).click()
@@ -372,18 +384,41 @@ def test_location_seal_overlap_meterai(driver):
         assert text == "Lokasi e-Meterai sebaiknya diposisikan secara berdampingan dan tidak tumpang tindih."
     except Exception as e:
         print(e)
-        
-        
-def test_one_flow_send_doc(driver, **kwargs: Union[int, bool, list[int]]):
+
+
+def action_needed(driver, act: str, sort: int, name="", email=0):
+    if act == "sign":
+        name = "jajang"
+        email = 0
+    elif act == "initials":
+        name = "garnacho"
+        email = 2
+    elif act == "approval":
+        name = "bagott"
+        email = 3
+    elif act == "share":
+        name = "eko"
+        email = 1
+
+    doc.name_receiver(driver, sort).send_keys(name)
+    doc.email_receiver(driver, sort).send_keys(credentials[email]["username"])
+    Select(doc.select_action(driver, sort)).select_by_value(act)
+    delay(2)
+
+
+def test_one_flow_send_doc(driver, **kwargs):
     """default send doc case test"""
 
     iteration = kwargs.get('iteration', 1)
     is_seal = kwargs.get('is_seal', 0)
+    seq = kwargs.get('seq', False)
+    actions = kwargs.get('actions', [{"actions": "sign", "sort": 1}])
     account_num = kwargs.get('account_num', 1)
     is_used = kwargs.get('is_draft', False)
     meterai = kwargs.get('meterai', False)
     size = kwargs.get('size', [-100, -65])
     pos = kwargs.get('pos', [80, 90])
+    actions_list = [item["actions"] for item in actions]
 
     if is_used is False:
         test_emet_login(driver, seal=account_num)
@@ -406,24 +441,52 @@ def test_one_flow_send_doc(driver, **kwargs: Union[int, bool, list[int]]):
                 doc.check_materai(driver).click()
                 Select(doc.select_document_type(driver)).select_by_value("4b")
 
-            doc.name_first_receiver(driver).send_keys("digisign")
-            doc.email_first_receiver(driver).send_keys(credentials[0]["username"])
+            if seq:
+                doc.label_sort_sign(driver).click()
 
-        doc.btn_detail_doc(driver).click()
-        doc.btn_add_sign(driver).click()
+            if len(actions) > 1:
+                for n in range(len(actions) - 1):
+                    doc.button_add_receiver(driver).click()
 
-        delay(2)
+                pass
+
+            for act in actions:
+                action_needed(driver, act["actions"], act["sort"])
+
+                if act == actions[-1]:
+                    print(actions_list)
+                    doc.btn_detail_doc(driver).click()
+                    delay(2)
+                else:
+                    pass
+        else:
+            doc.btn_detail_doc(driver).click()
+            delay(2)
+
+            doc.btn_add_sign(driver).click()
+
+        if 'sign' in actions_list:
+            doc.btn_add_sign(driver).click()
+            ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
+            doc.lock_sign_1(driver).click()
+            doc.btn_set_email(driver).click()
+
+        if 'initials' in actions_list:
+            doc.button_paraf(driver).click()
+            ActionChains(driver).drag_and_drop_by_offset(doc.paraf_box(driver), pos[0], pos[1]).perform()
+            doc.lock_paraf_1(driver).click()
+
+            doc.btn_set_email_paraf(driver).click()
+            WebDriverWait(driver, 15).until(
+                EC.element_to_be_clickable(
+                    doc.btn_set_email_paraf(driver)
+                )
+            ).click()
 
         if meterai:
             doc.button_add_meterai(driver).click()
             ActionChains(driver).drag_and_drop_by_offset(doc.meterai_zone1(driver), pos[0], pos[1]).perform()
             doc.button_lock_meterai1(driver).click()
-
-        ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
-        ActionChains(driver).drag_and_drop_by_offset(doc.resizing_zone_1(driver), size[0], size[1]).perform()
-
-        doc.lock_sign_1(driver).click()
-        doc.btn_set_email(driver).click()
 
         doc.btn_send_doc(driver).click()
         doc.btn_process_send_doc(driver).click()
@@ -493,12 +556,33 @@ def test_doc_sent_and_appear_on_inbox(driver):
     except Exception as e:
         print(e)
 
-    
-def test_bulk_send(driver):
-    """Menyelesaikan Send Dokumen dengan benar dan dengan e-meterai bulksend"""
-    test_one_flow_send_doc(driver, meterai=True, iteration=5)
-
 
 def test_send_doc_meterai(driver):
     """Send document with meterai"""
     test_one_flow_send_doc(driver, meterai=True)
+
+
+def test_send_doc_meterai_paraf(driver):
+    """send document with meterai and paraf"""
+    test_one_flow_send_doc(driver, meterai=True, actions=[{"actions": "initials", "sort": 1}])
+
+
+def test_send_doc_meterai_paraf_ttd(driver):
+    """send document with meterai and paraf"""
+    test_one_flow_send_doc(driver, meterai=True, actions=[
+        {"actions": "initials", "sort": 1},
+        {"actions": "sign", "sort": 2}
+    ])
+
+
+def test_send_doc_meterai_ttd_share(driver):
+    """send document with meterai, tandatangan, dan salinan"""
+    test_one_flow_send_doc(driver, meterai=True, actions=[
+        {"actions": 'sign', "sort": 1},
+        {"actions": 'share', "sort": 2},
+    ])
+
+
+def test_bulk_send(driver):
+    """Menyelesaikan Send Dokumen dengan benar dan dengan e-meterai bulksend"""
+    test_one_flow_send_doc(driver, meterai=True, iteration=5)

@@ -105,8 +105,8 @@ def test_web2_2_1(driver, **kwargs):
     test_web1_1(driver)
 
     if is_filled is True:
-        doc.name_first_receiver(driver).send_keys("wahyu")
-        doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")
+        doc.name_receiver(driver, 1).send_keys("wahyu")
+        doc.email_receiver(driver, 1).send_keys("ditest6@tandatanganku.com")
 
     doc.btn_detail_doc(driver).click()
     delay(2)
@@ -135,7 +135,7 @@ def test_web2_2_3(driver):
     """isi form penerima dokumen dengan nama kosong"""
     test_web1_1(driver)
 
-    doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")
+    doc.email_receiver(driver, 1).send_keys("ditest6@tandatanganku.com")
     doc.btn_detail_doc(driver).click()
 
     try:
@@ -151,8 +151,8 @@ def test_web2_2_4(driver):
     """isi form penerima dokumen dengan spasi saja"""
     test_web1_1(driver)
 
-    doc.name_first_receiver(driver).send_keys(" ")
-    doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")
+    doc.name_receiver(driver, 1).send_keys(" ")
+    doc.email_receiver(driver, 1).send_keys("ditest6@tandatanganku.com")
     doc.btn_detail_doc(driver).click()
 
     try:
@@ -168,7 +168,7 @@ def test_web2_2_5(driver):
     """isi form email penerima kosong"""
     test_web1_1(driver)
 
-    doc.name_first_receiver(driver).send_keys("wahyu")
+    doc.name_receiver(driver, 1).send_keys("wahyu")
 
     doc.btn_detail_doc(driver).click()
     delay(2)
@@ -184,8 +184,8 @@ def test_web2_2_6(driver):
     """isi form email penerima dengan format email salah"""
     test_web1_1(driver)
 
-    doc.name_first_receiver(driver).send_keys("wayy")
-    doc.email_first_receiver(driver).send_keys("ditest28")
+    doc.name_receiver(driver, 1).send_keys("wayy")
+    doc.email_receiver(driver, 1).send_keys("ditest28")
 
     doc.btn_detail_doc(driver).click()
     delay(2)
@@ -229,11 +229,11 @@ def test_web2_3_2(driver, **kwargs):
         pass
 
     doc.button_add_receiver(driver).click()
-    doc.input_name_receiver_2(driver).send_keys("Aziz")
+    doc.name_receiver(driver, 2)(driver).send_keys("Aziz")
     if seal:
-        doc.input_email_receiver_2(driver).send_keys("ditest6@tandatanganku.com")
+        doc.email_receiver(driver, 2)(driver).send_keys("ditest6@tandatanganku.com")
     else:
-        doc.input_email_receiver_2(driver).send_keys("aziz@digi-id.id")
+        doc.email_receiver(driver, 2)(driver).send_keys("aziz@digi-id.id")
 
     if select is "Dibutuhkan Tandatangan":
         doc.btn_detail_doc(driver).click()
@@ -266,8 +266,8 @@ def test_web2_3_4(driver, **kwargs):
     is_corp = kwargs.get('corp', False)
     test_web1_1(driver, seal=is_corp)
 
-    doc.name_first_receiver(driver).send_keys("digi")
-    doc.email_first_receiver(driver).send_keys("ditest6@tandatanganku.com")
+    doc.name_receiver(driver, 1).send_keys("digi")
+    doc.email_receiver(driver, 1).send_keys("ditest6@tandatanganku.com")
     Select(doc.select_action_need(driver)).select_by_visible_text("Dibutuhkan Paraf")
 
     doc.btn_detail_doc(driver).click()
@@ -382,8 +382,8 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
                 doc.check_materai(driver).click()
                 Select(doc.select_document_type(driver)).select_by_value("4b")
 
-            doc.name_first_receiver(driver).send_keys("digisign")
-            doc.email_first_receiver(driver).send_keys("dstest1@tandatanganku.com")
+            doc.name_receiver(driver, 1).send_keys("digisign")
+            doc.email_receiver(driver, 1).send_keys("dstest1@tandatanganku.com")
 
         doc.btn_detail_doc(driver).click()
         delay(2)

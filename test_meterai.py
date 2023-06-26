@@ -454,7 +454,6 @@ def test_one_flow_send_doc(driver, **kwargs):
                 action_needed(driver, act["actions"], act["sort"])
 
                 if act == actions[-1]:
-                    print(actions_list)
                     doc.btn_detail_doc(driver).click()
                     delay(2)
                 else:
@@ -482,6 +481,10 @@ def test_one_flow_send_doc(driver, **kwargs):
                     doc.btn_set_email_paraf(driver)
                 )
             ).click()
+
+        if is_seal:
+            ActionChains(driver).drag_and_drop_by_offset(doc.seal_zone(driver), 0, 300).perform()
+            doc.button_lockseal(driver).click()
 
         if meterai:
             doc.button_add_meterai(driver).click()
@@ -577,10 +580,31 @@ def test_send_doc_meterai_paraf_ttd(driver):
 
 def test_send_doc_meterai_ttd_share(driver):
     """send document with meterai, tandatangan, dan salinan"""
-    test_one_flow_send_doc(driver, meterai=True, actions=[
-        {"actions": 'sign', "sort": 1},
-        {"actions": 'share', "sort": 2},
-    ])
+    test_one_flow_send_doc(
+        driver,
+        meterai=True,
+        actions=[
+            {"actions": 'sign', "sort": 1},
+            {"actions": 'share', "sort": 2}
+        ]
+    )
+
+
+def test_send_doc_emeterai_ttd_check(driver):
+    """send document with meterai, ttd, dan cek"""
+    test_one_flow_send_doc(
+        driver,
+        meterai=True,
+        seq=True,
+        actions=[
+            {"actions": 'approval', "sort": 1},
+            {"actions": 'sign', "sort": 2}
+        ]
+    )
+
+
+def test_send_doc_meterai_sign_seal(driver):
+    test_one_flow_send_doc(driver, meterai=True, is_seal=1)
 
 
 def test_bulk_send(driver):

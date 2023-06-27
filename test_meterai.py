@@ -15,7 +15,7 @@ doc = doc_object
 form = form_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["test"]
+url_staging = url["app"]
 
 act_kind = {
     "1": "sign",
@@ -75,7 +75,7 @@ def test_doc_upload(driver, **kwargs):
     test_emet_login(driver, seal=is_seal)
 
     if is_pdf == "pdf":
-        form.doc_file(driver).send_keys("D:\\local\\digi\\file\\report.pdf")
+        form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
     else:
         form.doc_file(driver).send_keys("D:\\local\\digi\\file\\image.jpeg")
     delay(4)
@@ -426,10 +426,13 @@ def test_one_flow_send_doc(driver, **kwargs):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("D:\\local\\digi\\file\\report.pdf")
+            form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
             delay(2)
             form.doc_submit(driver).click()
             delay(2)
+
+            doc.filename(driver).clear()
+            doc.filename(driver).send_keys("automation testing document")
 
             if account_num == 1:
                 if is_seal == 0:
@@ -464,31 +467,34 @@ def test_one_flow_send_doc(driver, **kwargs):
 
             doc.btn_add_sign(driver).click()
 
-        if 'sign' in actions_list:
-            doc.btn_add_sign(driver).click()
-            ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
-            doc.lock_sign_1(driver).click()
-            doc.btn_set_email(driver).click()
-
         if 'initials' in actions_list:
             doc.button_paraf(driver).click()
             ActionChains(driver).drag_and_drop_by_offset(doc.paraf_box(driver), pos[0], pos[1]).perform()
             doc.lock_paraf_1(driver).click()
 
-            doc.btn_set_email_paraf(driver).click()
-            WebDriverWait(driver, 15).until(
-                EC.element_to_be_clickable(
-                    doc.btn_set_email_paraf(driver)
-                )
-            ).click()
+            doc.btn_set_email(driver).click()
+
+        if 'sign' in actions_list:
+            doc.btn_add_sign(driver).click()
+            ActionChains(driver).drag_and_drop_by_offset(doc.sign_zone_1(driver), pos[0], pos[1]).perform()
+            doc.lock_sign_1(driver).click()
+
+            if len(actions_list) == 1:
+                doc.btn_set_email(driver).click()
+            else:
+                try:
+                    delay(5)
+                except Exception as e:
+                    print(e)
+                    print("tolong click set email secara manual karena element tidak bisa di click oleh selenium")
 
         if is_seal:
-            ActionChains(driver).drag_and_drop_by_offset(doc.seal_zone(driver), 0, 300).perform()
+            ActionChains(driver).drag_and_drop_by_offset(doc.seal_zone(driver), -40, 300).perform()
             doc.button_lockseal(driver).click()
 
         if meterai:
             doc.button_add_meterai(driver).click()
-            ActionChains(driver).drag_and_drop_by_offset(doc.meterai_zone1(driver), pos[0], pos[1]).perform()
+            ActionChains(driver).drag_and_drop_by_offset(doc.meterai_zone1(driver), pos[0], 200).perform()
             doc.button_lock_meterai1(driver).click()
 
         doc.btn_send_doc(driver).click()
@@ -561,17 +567,19 @@ def test_doc_sent_and_appear_on_inbox(driver):
 
 
 def test_send_doc_meterai(driver):
-    """Send document with meterai"""
+    """WEB-3.22"""
     test_one_flow_send_doc(driver, meterai=True)
 
 
 def test_send_doc_meterai_paraf(driver):
-    """send document with meterai and paraf"""
+    """WEB-3.23"""
     test_one_flow_send_doc(driver, meterai=True, actions=[{"actions": "initials", "sort": 1}])
+
+# - WEB-24 & WEB~25
 
 
 def test_send_doc_meterai_paraf_ttd(driver):
-    """send document with meterai and paraf"""
+    """WEB-3.26"""
     test_one_flow_send_doc(driver, meterai=True, actions=[
         {"actions": "initials", "sort": 1},
         {"actions": "sign", "sort": 2}
@@ -579,7 +587,7 @@ def test_send_doc_meterai_paraf_ttd(driver):
 
 
 def test_send_doc_meterai_ttd_share(driver):
-    """send document with meterai, tandatangan, dan salinan"""
+    """WEB-3.27"""
     test_one_flow_send_doc(
         driver,
         meterai=True,
@@ -591,7 +599,7 @@ def test_send_doc_meterai_ttd_share(driver):
 
 
 def test_send_doc_emeterai_ttd_check(driver):
-    """send document with meterai, ttd, dan cek"""
+    """WEB-3.28"""
     test_one_flow_send_doc(
         driver,
         meterai=True,
@@ -604,7 +612,72 @@ def test_send_doc_emeterai_ttd_check(driver):
 
 
 def test_send_doc_meterai_sign_seal(driver):
+    """WEB-3.29"""
     test_one_flow_send_doc(driver, meterai=True, is_seal=1)
+
+
+def test_send_doc_meterai_init_share(driver):
+    """WEB-3.30"""
+    test_one_flow_send_doc(driver, meterai=True, actions=[
+        {"actions": 'initials', "sort": 1},
+        {"actions": 'share', "sort": 2}
+    ])
+
+
+def test_send_doc_meterai_init_approval(driver):
+    """WEB-3.31"""
+    test_one_flow_send_doc(driver, seq=True, meterai=True, actions=[
+        {"actions": 'initials', "sort": 2},
+        {"actions": 'approval', "sort": 1}
+    ])
+
+
+def test_send_doc_meterai_init_seal(driver):
+    """"WEB-3.32"""
+    test_one_flow_send_doc(driver, is_seal=1, meterai=True, actions=[
+        {"actions": 'initials', "sort": 1}
+    ])
+
+
+def test_send_doc_meterai_seal_share(driver):
+    """WEB-3.34"""
+    test_one_flow_send_doc(driver, is_seal=1, meterai=True, actions=[
+        {"actions": 'share', "sort": 1}
+    ])
+
+
+def test_send_doc_meterai_seal_approval(driver):
+    """WEB-3.35"""
+    test_one_flow_send_doc(driver, seq=True, is_seal=1, meterai=True, actions=[
+        {"actions": 'approval', "sort": 1},
+        {"actions": 'sign', "sort": 2}
+    ])
+
+
+def test_send_doc_meterai_sign_share_init(driver):
+    """WEB-3.36"""
+    test_one_flow_send_doc(driver, seq=True, meterai=True, actions=[
+        {"actions": 'sign', "sort": 1},
+        {"actions": 'share', "sort": 2},
+        {"actions": 'initials', "sort": 3}
+    ])
+
+
+def test_send_doc_meterai_sign_init_approval(driver):
+    """WEB-3.37"""
+    test_one_flow_send_doc(driver, seq=True, meterai=True, actions=[
+        {"actions": 'approval', "sort": 1},
+        {"actions": 'sign', "sort": 3},
+        {"actions": 'initials', "sort": 2}
+    ])
+
+
+def test_send_doc_meterai_sign_initials_seal(driver):
+    """WEB-3.38"""
+    test_one_flow_send_doc(driver, meterai=True, is_seal=1, actions=[
+        {"actions": 'sign', "sort": 1},
+        {"actions": 'initials', "sort": 2}
+    ])
 
 
 def test_bulk_send(driver):

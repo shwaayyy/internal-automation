@@ -368,7 +368,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("D:\\local\\digi\\file\\report.pdf")
+            form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
             delay(2)
             form.doc_submit(driver).click()
             delay(2)

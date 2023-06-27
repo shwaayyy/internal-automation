@@ -11,7 +11,7 @@ from selenium.webdriver.chrome.options import Options
 
 url = {
     "prod": "https://app.digisign.id",
-    "test": "https://app.tandatanganku.com",
+    "app": "https://app.tandatanganku.com",
     "mail-testing": "https://mail.tandatanganku.com",
     "mail-digi": "https://mail.digi-id.id",
     "devkube": "https://devkube.tandatanganku.com",
@@ -70,11 +70,8 @@ def driver():
 
     browser.maximize_window()
     browser.implicitly_wait(20)
-    browser.get(url["devkube"])
+    browser.get(url["app"])
 
     yield browser
 
     browser.close()
-
-
-

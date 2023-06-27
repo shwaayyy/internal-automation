@@ -92,7 +92,7 @@ def resizing_zone_1(driver) -> WebElement:
 
 def btn_set_email(driver) -> WebElement:
     return driver.find_element(
-        By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[16]/div/div/div/div/div/div[3]/button")
+        By.XPATH, "//button[text()='Set Email']")
 
 
 def btn_process_send_doc(driver) -> WebElement:
@@ -292,7 +292,7 @@ def button_paraf(driver) -> WebElement:
 def btn_set_email_paraf(driver) -> WebElement:
     return driver.find_element(
         By.XPATH,
-        "/html/body/div[1]/div[2]/div[2]/div[16]/div[1]/div/div/div/div/div[3]/button"
+        "//button[text()='Set Email']"
     )
 
 
@@ -465,3 +465,6 @@ def cancel_meterai1(driver) -> WebElement:
 def cancel_meterai2(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='met2']")
 
+
+def filename(driver):
+    return driver.find_element(By.XPATH, "//*[@id='filename']")

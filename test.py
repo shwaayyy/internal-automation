@@ -12,7 +12,7 @@ form = form_object
 wna = form_wna_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["test"]
+url_staging = url["app"]
 
 
 def test_crp1_1(driver):
@@ -287,9 +287,9 @@ def test_crp1_16(driver, **kwargs):
     wna.button_next2(driver).click()
 
     if up_photo is "passport":
-        wna.input_img_passport(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
+        wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
     elif up_photo is "kitas":
-        wna.input_img_kitas(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
+        wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
 
     wna.webcam(driver).click()
     delay(10)
@@ -320,8 +320,8 @@ def test_crp1_18(driver):
     delay(2)
     wna.button_next2(driver).click()
 
-    wna.input_img_passport(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
-    wna.input_img_kitas(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
+    wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
+    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
 
     wna.i_have_read_radio(driver).click()
     delay(5)
@@ -342,8 +342,8 @@ def test_crp1_19(driver):
     delay(2)
     wna.button_next2(driver).click()
 
-    wna.input_img_passport(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
-    wna.input_img_kitas(driver).send_keys("D:\\local\\automationTest\\file\\image.jpeg")
+    wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
+    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
 
     wna.webcam(driver).click()
     delay(10)

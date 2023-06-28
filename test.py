@@ -1,3 +1,5 @@
+from selenium.webdriver import ActionChains
+
 from conftest import url, delay, robot
 
 from selenium.webdriver.support.select import Select
@@ -8,7 +10,7 @@ doc = doc_object
 form = form_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["test"]
+url_staging = url["app"]
 
 
 def test_reg_page(driver):
@@ -232,7 +234,7 @@ def test_number_less_than_8(driver):
 
 
 def test_true_identity(driver, **kwargs):
-    redundancy = kwargs.get("redundancy", False)
+    inherit = kwargs.get("inherit", False)
     test_birth_place_validation(driver, use=True)
 
     form.username(driver).send_keys("asdteuse782")
@@ -243,16 +245,23 @@ def test_true_identity(driver, **kwargs):
     form.phone_input_register(driver).send_keys("894381216")
 
     delay(5)
-    form.actions.double_click(form.step3(driver)).perform()
 
-    if redundancy:
+    for i in range(10):
+        form.step3(driver).click()
+        ActionChains(driver).double_click(form.step3(driver)).perform()
+        if form.step3_title(driver) is not None:
+            break
+
+    if inherit:
         pass
     else:
         assert form.step3_title(driver) is not None
 
+    delay(10)
+
 
 def test_input_ktp(driver):
-    test_true_identity(driver, redundancy=True)
+    test_true_identity(driver, inherit=True)
 
     delay(2)
     form.span_ktp_input(driver).click()
@@ -260,6 +269,5 @@ def test_input_ktp(driver):
 
     robot.press("escape")
     delay(2)
-    form.ktp_input(driver).send_keys(
-        "C:\\Users\\dignitas\\Downloads\\npwp_20221101055126 (1).jpg")
+    form.ktp_input(driver).send_keys("C:\\wahyu\\dummy file\\ktp aziz.jpg")
     delay(5)

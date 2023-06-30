@@ -11,18 +11,18 @@ from selenium.webdriver.chrome.options import Options
 
 url = {
     "prod": "https://app.digisign.id",
-    "test": "https://app.tandatanganku.com",
+    "app": "https://app.tandatanganku.com",
     "mail-testing": "https://mail.tandatanganku.com",
     "mail-digi": "https://mail.digi-id.id",
-    "dummy": "https://www.jetbrains.com/"
+    "devkube": "https://devkube.tandatanganku.com",
 }
-
 
 qa_team = {
     "wahyu": "Wahyu Hidayat",
     "aisy": "Rohadatul Aisy",
     "latifah": "Latiah Ramadhana M.E."
 }
+
 
 robot = pyautogui
 
@@ -32,36 +32,14 @@ def delay(sec):
 
 
 def driver_manager(driver):
-    if driver is "chrome":
+    if driver == "chrome":
         options = Options()
         options.add_argument('--use-fake-ui-for-media-stream')
         options.add_experimental_option("useAutomationExtension", False)
         # options.add_argument('--use-fake-device-for-media-stream')
         return webdriver.Chrome(options=options)
-    elif driver is "firefox":
+    elif driver == "firefox":
         return webdriver.Firefox()
-
-
-# How to run the test you can run with CLI: pytest --html=reports/report_reg_wna.html --self-contained-html
-# <test_case_file>.py
-@pytest.fixture
-def driver():
-    browser = driver_manager("chrome")
-
-    browser.maximize_window()
-    browser.implicitly_wait(20)
-    browser.get(url["test"])
-
-    yield browser
-
-    browser.close()
-
-
-def pytest_configure(config):
-    config._metadata.update({
-        'PIC': qa_team["wahyu"],
-        'Time Test': datetime.now().strftime("%d-%m-%Y %H:%M:%S"),
-    })
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -79,3 +57,21 @@ def pytest_runtest_makereport(item):
             print("Couldn't get screenshot")
             print(e)
         report.extra = extra
+
+
+def pytest_html_report_title(report):
+    report.title = "Automation Report"
+
+
+# How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html test.py
+@pytest.fixture
+def driver():
+    browser = driver_manager("chrome")
+
+    browser.maximize_window()
+    browser.implicitly_wait(20)
+    browser.get(url["app"])
+
+    yield browser
+
+    browser.close()

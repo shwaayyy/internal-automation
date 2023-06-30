@@ -14,7 +14,7 @@ doc = doc_object
 form = form_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["test"]
+url_staging = url["app"]
 
 
 def test_web1_1(driver, **kwargs):

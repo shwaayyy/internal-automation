@@ -242,7 +242,7 @@ def test_crp1_12(driver):
     delay(2)
     wna.button_next(driver).click()
 
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
     wna.input_handphone(driver).send_keys("87804070516" + Keys.ENTER)
     robot.press('ctrl')
 
@@ -265,7 +265,7 @@ def test_crp1_14(driver):
 def test_crp1_15(driver):
     test_crp1_10(driver, used=True)
 
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
     wna.button_next2(driver).click()
     delay(2)
 
@@ -281,15 +281,15 @@ def test_crp1_16(driver, **kwargs):
     test_crp1_10(driver, used=True)
 
     wna.input_handphone(driver).send_keys("89977882983")
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
 
     delay(2)
     wna.button_next2(driver).click()
 
     if up_photo is "passport":
-        wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
+        wna.input_img_passport(driver).send_keys("C:\\wahyu\\local\\digi\\file\\passport.jpg")
     elif up_photo is "kitas":
-        wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
+        wna.input_img_kitas(driver).send_keys("C:\\wahyu\\local\\digi\\file\\kitas.jpg")
 
     wna.webcam(driver).click()
     delay(10)
@@ -315,13 +315,13 @@ def test_crp1_18(driver):
     test_crp1_10(driver, used=True)
 
     wna.input_handphone(driver).send_keys("89977882983")
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
 
     delay(2)
     wna.button_next2(driver).click()
 
-    wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
-    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
+    wna.input_img_passport(driver).send_keys("C:\\wahyu\\local\\digi\\file\\passport.jpg")
+    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\local\\digi\\file\\kitas.jpg")
 
     wna.i_have_read_radio(driver).click()
     delay(5)
@@ -337,13 +337,13 @@ def test_crp1_19(driver):
     test_crp1_10(driver, used=True)
 
     wna.input_handphone(driver).send_keys("89977882983")
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
 
     delay(2)
     wna.button_next2(driver).click()
 
-    wna.input_img_passport(driver).send_keys("C:\\wahyu\\dummy file\\passport.jpg")
-    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\dummy file\\Kitas.jpg")
+    wna.input_img_passport(driver).send_keys("C:\\wahyu\\local\\digi\\file\\passport.jpg")
+    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\local\\digi\\file\\kitas.jpg")
 
     wna.webcam(driver).click()
     delay(10)
@@ -366,15 +366,16 @@ def test_crp1_21(driver):
     test_crp1_10(driver, used=True)
 
     wna.input_handphone(driver).send_keys("89977882983")
-    wna.input_email(driver).send_keys("dstest4@tandatanganku.com")
+    wna.input_email(driver).send_keys("dgtest4@tandatanganku.com")
 
     delay(2)
     wna.button_next2(driver).click()
 
-    wna.input_img_passport(driver).send_keys("file/image.jpeg")
-    wna.input_img_kitas(driver).send_keys("file/image.jpeg")
+    wna.input_img_passport(driver).send_keys("C:\\wahyu\\local\\digi\\file\\passport.jpg")
+    wna.input_img_kitas(driver).send_keys("C:\\wahyu\\local\\digi\\file\\kitas.jpg")
 
     wna.webcam(driver).click()
+
     delay(10)
     wna.button_takefoto(driver).click()
 
@@ -393,12 +394,12 @@ def test_crp1_22(driver):
     test_crp1_21(driver)
     time_test = datetime.now()
 
-    driver.execute_script("window.open('about:blank','tab2')")
+    driver.execute_script(f"window.open('about:blank','tab2')")
     driver.switch_to.window(driver.window_handles[1])
     driver.get(url_mail)
 
-    mail.input_username(driver).send_keys("dstest4@tandatanganku.com")
-    mail.input_password(driver).send_keys("dstest123" + Keys.ENTER)
+    mail.input_username(driver).send_keys("dgtest4@tandatanganku.com")
+    mail.input_password(driver).send_keys("dgtest123" + Keys.ENTER)
     delay(5)
 
     for i in range(5):

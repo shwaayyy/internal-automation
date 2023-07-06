@@ -183,3 +183,23 @@ def ktp_input(driver) -> WebElement:
 
 def span_ktp_input(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//span[.//*[@id='imgektp']]")
+
+
+def button_webcam(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//button[@id='wb']")
+
+
+def button_selfie_submit(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//button[@id='cambModals']")
+
+
+def button_draw_sign(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//button[@data-toggle='modal']")
+
+
+def button_save_ttd(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='svttd']")
+
+
+def canvas_ttd(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//canvas[@id='signature-pad']")

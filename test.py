@@ -1,4 +1,7 @@
-from selenium.webdriver import ActionChains
+from selenium.webdriver import ActionChains, Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 from conftest import url, delay, robot
 
@@ -242,12 +245,14 @@ def test_true_identity(driver, **kwargs):
     form.password_reg(driver).send_keys("Mamang123!")
     form.password_confirmation(driver).send_keys("Mamang123!")
     form.email_input_register(driver).send_keys("amang78@spambox.xyz")
-    form.phone_input_register(driver).send_keys("894381216")
+    form.phone_input_register(driver).send_keys("89099277272" + Keys.ENTER)
+    robot.press("enter")
 
     delay(5)
 
     for i in range(10):
         form.step3(driver).click()
+        delay(2)
         ActionChains(driver).double_click(form.step3(driver)).perform()
         if form.step3_title(driver) is not None:
             break
@@ -271,3 +276,31 @@ def test_input_ktp(driver):
     delay(2)
     form.ktp_input(driver).send_keys("C:\\wahyu\\dummy file\\ktp aziz.jpg")
     delay(5)
+
+
+def test_input_selfie(driver):
+    test_true_identity(driver, inherit=True)
+
+    form.button_webcam(driver).click()
+    delay(4)
+    form.button_selfie_submit(driver).click()
+
+    delay(5)
+
+
+def test_draw_signature(driver):
+    test_true_identity(driver, inherit=True)
+
+    form.button_draw_sign(driver).click()
+
+    delay(10)
+
+    form.button_save_ttd(driver).click()
+    delay(2)
+
+
+def test_input_captcha(driver):
+    test_true_identity(driver, inherit=True)
+
+
+

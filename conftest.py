@@ -71,7 +71,7 @@ def driver():
 
     browser.maximize_window()
     browser.implicitly_wait(20)
-    browser.get(url["app"])
+    browser.get(url["devkube"])
 
     yield browser
 

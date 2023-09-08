@@ -1,9 +1,5 @@
 from datetime import datetime
 
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
 from conftest import url, delay
 
 from selenium.webdriver import Keys, ActionChains
@@ -26,19 +22,19 @@ act_kind = {
 
 credentials = [
     {
-        "username": "dstest1@tandatanganku.com",
-        "password": "123456789!",
-        "pass-email": "dstest123"
+        "username": "wahyusni@tandatanganku.com",
+        "password": "wahyusni123!",
+        "pass-email": "wahyusni123"
+    },
+    {
+        "username": "wahyusni@tandatanganku.com",
+        "password": "wahyusni123!",
+        "pass-email": "wahyusni123"
     },
     {
         "username": "wahyu@digi-id.id",
         "password": "Kijang321!",
         "pass-email": "Kijang321!"
-    },
-    {
-        "username": "dstest4@tandatanganku.com",
-        "password": "123456789!",
-        "pass-email": "dstest123"
     },
     {
         "username": "ditest6@tandatanganku.com",
@@ -57,12 +53,14 @@ def test_emet_login(driver, **kwargs: int):
     form.password(driver).send_keys(credentials[seal]["password"] + Keys.ENTER)
     delay(4)
 
-    if seal == 1:
-        doc.choose_account(driver).click()
-    elif seal == 0:
-        doc.choose_account_personal(driver).click()
-    else:
-        pass
+    # if seal == 1:
+    #     doc.choose_account(driver).click()
+    # elif seal == 0:
+    #     doc.choose_account_personal(driver).click()
+    # else:
+    #     pass
+
+    doc.choose_account(driver).click()
 
     delay(3)
 
@@ -77,7 +75,7 @@ def test_doc_upload(driver, **kwargs):
     if is_pdf == "pdf":
         form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
     else:
-        form.doc_file(driver).send_keys("D:\\local\\digi\\file\\image.jpeg")
+        form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\image.jpeg")
     delay(4)
     form.doc_submit(driver).click()
     delay(2)
@@ -416,7 +414,7 @@ def test_one_flow_send_doc(driver, **kwargs):
     account_num = kwargs.get('account_num', 1)
     is_used = kwargs.get('is_draft', False)
     meterai = kwargs.get('meterai', False)
-    size = kwargs.get('size', [-100, -65])
+    # size = kwargs.get('size', [-100, -65])
     pos = kwargs.get('pos', [80, 90])
     actions_list = [item["actions"] for item in actions]
 

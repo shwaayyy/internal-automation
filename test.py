@@ -1,3 +1,4 @@
+import os
 from typing import Union
 from conftest import url, delay
 
@@ -10,7 +11,10 @@ doc = doc_object
 form = form_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["test"]
+url_staging = url["app"]
+
+wsl_path = "\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file"
+windows_path = "C:\\wahyu\\local\\digi\\file"
 
 
 def test_web1_1(driver, **kwargs):
@@ -32,9 +36,9 @@ def test_web1_1(driver, **kwargs):
 
     delay(3)
     if is_pdf == "pdf":
-        form.doc_file(driver).send_keys("\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file\\report.pdf")
+        form.doc_file(driver).send_keys(f"{windows_path}\\report.pdf")
     else:
-        form.doc_file(driver).send_keys("D:\\repository\\try\\PyTest-dev\\src\\file\\image.jpeg")
+        form.doc_file(driver).send_keys(f"{windows_path}\\image.jpeg")
     delay(4)
     form.doc_submit(driver).click()
     delay(2)
@@ -229,11 +233,11 @@ def test_web2_3_2(driver, **kwargs):
         pass
 
     doc.button_add_receiver(driver).click()
-    doc.name_receiver(driver, 2)(driver).send_keys("Aziz")
+    doc.name_receiver(driver, 2).send_keys("Aziz")
     if seal:
-        doc.email_receiver(driver, 2)(driver).send_keys("ditest6@tandatanganku.com")
+        doc.email_receiver(driver, 2).send_keys("ditest6@tandatanganku.com")
     else:
-        doc.email_receiver(driver, 2)(driver).send_keys("aziz@digi-id.id")
+        doc.email_receiver(driver, 2).send_keys("aziz@digi-id.id")
 
     if select is "Dibutuhkan Tandatangan":
         doc.btn_detail_doc(driver).click()
@@ -368,7 +372,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
+            form.doc_file(driver).send_keys(f"{os.getcwd()}\\Dokumen testing tandatangan.pdf")
             delay(2)
             form.doc_submit(driver).click()
             delay(2)

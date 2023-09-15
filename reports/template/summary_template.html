@@ -1,4 +1,4 @@
-<div>
+<div class="table_summary">
     <h1>Test Summary</h1>
 
     <table id="environment">
@@ -8,18 +8,22 @@
                 <div>{{qa_name}}</div>
             </td>
         </tr>
-
         <tr>
             <td>Test On</td>
             <td>
                 <div>{{time_test}}</div>
             </td>
         </tr>
-
         <tr>
             <td>Env</td>
             <td>
                 <div>{{env_test}}</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Test URL</td>
+            <td>
+                <div><a href='{{env_url}}'>{{env_url}}</a></div>
             </td>
         </tr>
     </table>

@@ -26,6 +26,8 @@ qa_team = {
     "latifah": "Latiah Ramadhana M.E."
 }
 
+app_env = url["devkube"]
+
 
 # robot = pyautogui
 
@@ -40,7 +42,7 @@ def driver_manager(driver):
         options.add_argument('--use-fake-ui-for-media-stream')
         options.add_experimental_option("useAutomationExtension", False)
         # options.add_argument('--use-fake-device-for-media-stream')
-        return webdriver.Chrome(options=options)
+        return webdriver.Chrome()
     elif driver == "firefox":
         return webdriver.Firefox()
 
@@ -52,7 +54,7 @@ def driver():
 
     browser.maximize_window()
     browser.implicitly_wait(20)
-    browser.get(url["devkube"])
+    browser.get(app_env)
 
     yield browser
 
@@ -65,19 +67,29 @@ def pytest_html_report_title(report):
 
 
 def pytest_html_results_summary(prefix, summary, postfix):
-    # Customize the summary here
-    # with open("reports/summary_template.html", "r") as file:
-    #     contents = file.read()
-    # summary.insert(1, contents)
-
     # configure Jinja2 environment
-    env = Environment(loader=FileSystemLoader('./reports/'))
+    env = Environment(loader=FileSystemLoader('./reports/template/'))
     template = env.get_template('summary_template.html')
 
-    # Render the templated with the data
-    rendered_summary = template.render(qa_name=qa_team["wahyu"], time_test=datetime.now(), env_test=url["devkube"])
+    # Devine variable
+    global app_env
+    key_name = ""
 
-    # Insert the rendered summary onti the pytest HTML report
+    # Get the name ENV
+    for key, value in url.items():
+        if value == app_env:
+            key_name = key
+            break
+
+    # Render the templated with the data
+    rendered_summary = template.render(
+        qa_name=qa_team["wahyu"],
+        time_test=datetime.now().strftime("%d-%m-%Y %H:%M"),
+        env_test=key_name,
+        env_url=app_env
+    )
+
+    # Insert the rendered summary onto the pytest HTML report
     summary.insert(1, rendered_summary)
 
 
@@ -88,7 +100,7 @@ def pytest_runtest_makereport(item):
     extra = getattr(report, "extra", [])
 
     if report.when == "call" or report.outcome != "passed":
-        browser = item.funcargs.get('driver')
+        browser = item.funcargs.get("driver")
 
         if browser is not None:
             try:

@@ -26,7 +26,7 @@ qa_team = {
     "latifah": "Latiah Ramadhana M.E."
 }
 
-app_env = url["devkube"]
+app_env = url["prod"]
 
 
 # robot = pyautogui
@@ -50,7 +50,7 @@ def driver_manager(driver):
 # How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html test.py
 @pytest.fixture
 def driver():
-    browser = driver_manager("firefox")
+    browser = driver_manager("chrome")
 
     browser.maximize_window()
     browser.implicitly_wait(20)

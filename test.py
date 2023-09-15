@@ -1,6 +1,7 @@
 import os
 from typing import Union
 from conftest import url, delay
+import requests
 
 from selenium.webdriver import Keys, ActionChains
 from selenium.webdriver.support.select import Select
@@ -11,7 +12,6 @@ doc = doc_object
 form = form_object
 mail = mail_object
 url_mail = url["mail-testing"]
-url_staging = url["app"]
 
 wsl_path = "\\wsl$\\Ubuntu\\home\\knowsmore\\airflow\\digi-auto\\digi\\file"
 windows_path = "C:\\wahyu\\local\\digi\\file"

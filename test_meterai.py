@@ -27,6 +27,11 @@ credentials = [
         "pass-email": "wahyusni123"
     },
     {
+        "username": "dickysni@tandatanganku.com",
+        "password": "Coba123#",
+        "is_personal": 1
+    },
+    {
         "username": "wahyusni@tandatanganku.com",
         "password": "wahyusni123!",
         "pass-email": "wahyusni123"
@@ -41,6 +46,7 @@ credentials = [
         "password": "Coba1234",
         "pass-email": "ditest123"
     },
+
 ]
 
 
@@ -406,7 +412,6 @@ def action_needed(driver, act: str, sort: int, name="", email=0):
 
 def test_one_flow_send_doc(driver, **kwargs):
     """default send doc case test"""
-
     iteration = kwargs.get('iteration', 1)
     is_seal = kwargs.get('is_seal', 0)
     seq = kwargs.get('seq', False)
@@ -572,6 +577,7 @@ def test_send_doc_meterai(driver):
 def test_send_doc_meterai_paraf(driver):
     """WEB-3.23"""
     test_one_flow_send_doc(driver, meterai=True, actions=[{"actions": "initials", "sort": 1}])
+
 
 # - WEB-24 & WEB~25
 

@@ -360,6 +360,13 @@ def link_terkirim(driver) -> WebElement:
         "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/ul/li[2]/a")
 
 
+def link_download(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div/div/div/div/div/div[2]/div[4]/ul/li[3]/a"
+    )
+
+
 def btn_eye(driver) -> WebElement:
     return driver.find_element(
         By.XPATH,
@@ -466,5 +473,12 @@ def cancel_meterai2(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='met2']")
 
 
-def filename(driver):
+def filename(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='filename']")
+
+
+def signature(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[2]/div[3]/div/span/a"
+    )

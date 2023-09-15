@@ -183,3 +183,16 @@ def ktp_input(driver) -> WebElement:
 
 def span_ktp_input(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//span[.//*[@id='imgektp']]")
+
+
+def dropdown_name(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//h4[@data-toggle='dropdown']")
+
+
+def logout(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//a[contains(@href, 'logout')]")
+
+
+def back_login(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//a[contains(@href, 'login')]")
+

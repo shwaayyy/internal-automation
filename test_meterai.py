@@ -20,16 +20,25 @@ act_kind = {
     "4": "share"
 }
 
+windows_path = "C:\\wahyu\\local\\digi\\file"
+
 credentials = [
     {
-        "username": "wahyusni@tandatanganku.com",
-        "password": "wahyusni123!",
-        "pass-email": "wahyusni123"
+        "username": "dktest23@tandatanganku.com",
+        "password": "Coba123#",
+        "pass-email": "Coba1234",
+        "is_personal": True
     },
     {
         "username": "dickysni@tandatanganku.com",
         "password": "Coba123#",
-        "is_personal": 1
+        "pass-email": "Coba123#",
+        "is_personal": False
+    },
+    {
+        "username": "wahyusni@tandatanganku.com",
+        "password": "wahyusni123!",
+        "pass-email": "wahyusni123"
     },
     {
         "username": "wahyusni@tandatanganku.com",
@@ -46,7 +55,6 @@ credentials = [
         "password": "Coba1234",
         "pass-email": "ditest123"
     },
-
 ]
 
 
@@ -390,10 +398,14 @@ def test_location_seal_overlap_meterai(driver):
         print(e)
 
 
-def action_needed(driver, act: str, sort: int, name="", email=0):
+def action_needed(driver, act: str, sort: int, is_personal: bool, name="", email=0):
     if act == "sign":
-        name = "jajang"
-        email = 0
+        if is_personal:
+            name = "wahyu"
+            email = 0
+        else:
+            name = "dicky"
+            email = 1
     elif act == "initials":
         name = "garnacho"
         email = 2
@@ -422,6 +434,7 @@ def test_one_flow_send_doc(driver, **kwargs):
     # size = kwargs.get('size', [-100, -65])
     pos = kwargs.get('pos', [80, 90])
     actions_list = [item["actions"] for item in actions]
+    pdf_file = kwargs.get('pdf_file', f"{windows_path}\\Dokumen testing tandatangan.pdf")
 
     if is_used is False:
         test_emet_login(driver, seal=account_num)
@@ -429,7 +442,7 @@ def test_one_flow_send_doc(driver, **kwargs):
     for i in range(iteration):
         if is_used is False:
             delay(2)
-            form.doc_file(driver).send_keys("C:\\wahyu\\local\\digi\\file\\Dokumen testing tandatangan.pdf")
+            form.doc_file(driver).send_keys(pdf_file)
             delay(2)
             form.doc_submit(driver).click()
             delay(2)
@@ -457,7 +470,7 @@ def test_one_flow_send_doc(driver, **kwargs):
                 pass
 
             for act in actions:
-                action_needed(driver, act["actions"], act["sort"])
+                action_needed(driver, act["actions"], act["sort"], credentials[1]["is_personal"])
 
                 if act == actions[-1]:
                     doc.btn_detail_doc(driver).click()
@@ -505,7 +518,7 @@ def test_one_flow_send_doc(driver, **kwargs):
         delay(3)
 
         if i is len(range(iteration)) - 1:
-            pass
+            doc.confirm_after_send_doc(driver).click()
             delay(3)
         else:
             doc.confirm_after_send_doc(driver).click()
@@ -687,3 +700,53 @@ def test_send_doc_meterai_sign_initials_seal(driver):
 def test_bulk_send(driver):
     """Menyelesaikan Send Dokumen dengan benar dan dengan e-meterai bulksend"""
     test_one_flow_send_doc(driver, meterai=True, iteration=5)
+
+
+def test_one_flow_download_doc_in_diff_acc(driver):
+    test_one_flow_send_doc(driver)
+
+    form.dropdown_name(driver).click()
+    form.logout(driver).click()
+    form.back_login(driver).click()
+
+
+def test_one_flow_download_doc_in_same_acc(driver):
+    test_one_flow_send_doc(driver)
+
+    doc.link_home(driver).click()
+    doc.signature(driver).click()
+
+    doc.button_proses_sign_one(driver).click()
+    doc.btn_otp_email(driver).click()
+    delay(10)
+
+    driver.execute_script("window.open('about:blank','tab2')")
+    driver.switch_to.window(driver.window_handles[1])
+    driver.get(url_mail)
+
+    mail.input_username(driver).send_keys(credentials[1]["username"])
+    mail.input_password(driver).send_keys(credentials[1]["pass-email"] + Keys.ENTER)
+    delay(5)
+
+    for i in range(7):
+        mail.refresh(driver).click()
+        delay(1)
+
+    ActionChains(driver).double_click(mail.msg_list_1(driver)).perform()
+
+    driver.switch_to.frame(mail.iframe_main_body(driver))
+    otp = mail.otp_selector(driver).text
+
+    driver.switch_to.window(driver.window_handles[0])
+
+    doc.otp_input_number(driver).send_keys(otp)
+
+    doc.btn_prosign(driver).click()
+    delay(2)
+    doc.btn_saya_yakin(driver).click()
+    doc.confirm_after_send_doc(driver).click()
+    delay(10)
+
+    doc.link_terkirim(driver).click()
+    doc.link_download(driver).click()
+    delay(10)

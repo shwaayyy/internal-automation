@@ -1,3 +1,4 @@
+import time
 from datetime import datetime
 
 from conftest import url, delay
@@ -24,8 +25,8 @@ windows_path = "C:\\wahyu\\local\\digi\\file"
 
 credentials = [
     {
-        "username": "dktest23@tandatanganku.com",
-        "password": "Coba123#",
+        "username": "ditest6@tandatanganku.com",
+        "password": "Coba1234",
         "pass-email": "Coba1234",
         "is_personal": True
     },
@@ -67,6 +68,8 @@ def test_emet_login(driver, **kwargs: int):
     form.password(driver).send_keys(credentials[seal]["password"] + Keys.ENTER)
     delay(4)
 
+    list_corp = ["dickysni@tandatanganku.com", "wahyusni@tandatanganku.com", "wahyu@digi-id.id"]
+
     # if seal == 1:
     #     doc.choose_account(driver).click()
     # elif seal == 0:
@@ -74,9 +77,12 @@ def test_emet_login(driver, **kwargs: int):
     # else:
     #     pass
 
-    doc.choose_account(driver).click()
+    if credentials[seal]["username"] in list_corp:
+        doc.choose_account(driver).click()
 
-    delay(3)
+    # doc.choose_account(driver).click()
+
+    delay(2)
 
 
 def test_doc_upload(driver, **kwargs):
@@ -108,8 +114,8 @@ def test_emet_pengaturan(driver, **kwargs):
     doc.button_add_me(driver).click()
     doc.btn_detail_doc(driver).click()
 
-    if is_next is True:
-        if is_not_locked is True:
+    if is_next:
+        if is_not_locked:
             doc.btn_add_sign(driver).click()
 
         doc.btn_send_doc(driver).click()
@@ -132,13 +138,13 @@ def test_emet_pengaturan(driver, **kwargs):
 
 
 def test_check_kinddoc(driver):
-    test_doc_upload(driver)
+    test_doc_upload(driver, seal=2)
 
     assert doc.select_document_type(driver) is not None
 
 
 def test_select_doc_type(driver, **kwargs):
-    employee_acc = kwargs.get('employee_acc', 1)
+    employee_acc = kwargs.get('employee_acc', 2)
     test_doc_upload(driver, seal=employee_acc)
 
     if employee_acc:
@@ -162,7 +168,7 @@ def test_select_doc_type_personal(driver):
 
 
 def test_kinddoc_not_selected(driver):
-    test_doc_upload(driver, seal=1)
+    test_doc_upload(driver, seal=2)
 
     doc.check_materai(driver).click()
 
@@ -401,7 +407,7 @@ def test_location_seal_overlap_meterai(driver):
 def action_needed(driver, act: str, sort: int, is_personal: bool, name="", email=0):
     if act == "sign":
         if is_personal:
-            name = "wahyu"
+            name = "dicky"
             email = 0
         else:
             name = "dicky"
@@ -434,6 +440,7 @@ def test_one_flow_send_doc(driver, **kwargs):
     # size = kwargs.get('size', [-100, -65])
     pos = kwargs.get('pos', [80, 90])
     actions_list = [item["actions"] for item in actions]
+    receiver = kwargs.get('receiver', 1)
     pdf_file = kwargs.get('pdf_file', f"{windows_path}\\Dokumen testing tandatangan.pdf")
 
     if is_used is False:
@@ -443,11 +450,15 @@ def test_one_flow_send_doc(driver, **kwargs):
         if is_used is False:
             delay(2)
             form.doc_file(driver).send_keys(pdf_file)
+
             delay(2)
+            awal = time.time()
             form.doc_submit(driver).click()
             delay(2)
 
             doc.filename(driver).clear()
+            akhir = time.time() - awal
+            print(f"\ntime to Upload doc {time.strftime('%H:%M:%S', time.gmtime(akhir))}")
             doc.filename(driver).send_keys("automation testing document")
 
             if account_num == 1:
@@ -470,7 +481,7 @@ def test_one_flow_send_doc(driver, **kwargs):
                 pass
 
             for act in actions:
-                action_needed(driver, act["actions"], act["sort"], credentials[1]["is_personal"])
+                action_needed(driver, act["actions"], act["sort"], credentials[receiver]["is_personal"])
 
                 if act == actions[-1]:
                     doc.btn_detail_doc(driver).click()
@@ -702,16 +713,65 @@ def test_bulk_send(driver):
     test_one_flow_send_doc(driver, meterai=True, iteration=5)
 
 
-def test_one_flow_download_doc_in_diff_acc(driver):
-    test_one_flow_send_doc(driver)
+def test_one_flow_download_doc_in_diff_acc(driver, **kwargs):
+    pdf_size = kwargs.get("pdf_size", "10mb")
+
+    test_one_flow_send_doc(driver, receiver=0, pdf_file=f"{windows_path}\\task\\{pdf_size}.pdf")
 
     form.dropdown_name(driver).click()
     form.logout(driver).click()
     form.back_login(driver).click()
 
+    test_emet_login(driver)
+    doc.signature(driver).click()
 
-def test_one_flow_download_doc_in_same_acc(driver):
-    test_one_flow_send_doc(driver)
+    doc.button_proses_sign_one(driver).click()
+    doc.btn_otp_email(driver).click()
+    delay(10)
+
+    driver.execute_script("window.open('about:blank','tab2')")
+    driver.switch_to.window(driver.window_handles[1])
+    driver.get(url_mail)
+
+    mail.input_username(driver).send_keys(credentials[0]["username"])
+    mail.input_password(driver).send_keys(credentials[0]["pass-email"] + Keys.ENTER)
+    delay(5)
+
+    for i in range(10):
+        mail.refresh(driver).click()
+        delay(1)
+
+    ActionChains(driver).double_click(mail.msg_list_1(driver)).perform()
+
+    driver.switch_to.frame(mail.iframe_main_body_personal(driver))
+    otp = mail.otp_selector(driver).text
+
+    delay(1)
+    driver.switch_to.window(driver.window_handles[0])
+    delay(2)
+
+    doc.otp_input_number(driver).send_keys(otp)
+
+    doc.btn_prosign(driver).click()
+    delay(2)
+    doc.btn_saya_yakin(driver).click()
+    delay(5)
+    doc.close_modal_sign(driver).click()
+
+    doc.first_inbox_inboxpage(driver).click()
+    first = time.time()
+    doc.link_download_inbox(driver).click()
+    last = time.time() - first
+
+    print("Personal Account")
+    print(f"File size: {pdf_size}")
+    print(f"\ntime to download doc {time.strftime('%H:%M:%S', time.gmtime(last))}")
+
+
+def test_one_flow_download_doc_in_same_acc(driver, **kwargs):
+    pdf_size = kwargs.get("pdf_size", "3mb")
+
+    test_one_flow_send_doc(driver, pdf_file=f"{windows_path}\\task\\{pdf_size}.pdf")
 
     doc.link_home(driver).click()
     doc.signature(driver).click()
@@ -728,7 +788,7 @@ def test_one_flow_download_doc_in_same_acc(driver):
     mail.input_password(driver).send_keys(credentials[1]["pass-email"] + Keys.ENTER)
     delay(5)
 
-    for i in range(7):
+    for i in range(10):
         mail.refresh(driver).click()
         delay(1)
 
@@ -737,16 +797,23 @@ def test_one_flow_download_doc_in_same_acc(driver):
     driver.switch_to.frame(mail.iframe_main_body(driver))
     otp = mail.otp_selector(driver).text
 
+    delay(1)
     driver.switch_to.window(driver.window_handles[0])
+    delay(2)
 
     doc.otp_input_number(driver).send_keys(otp)
 
     doc.btn_prosign(driver).click()
     delay(2)
     doc.btn_saya_yakin(driver).click()
-    doc.confirm_after_send_doc(driver).click()
-    delay(10)
+    delay(5)
+    doc.close_modal_sign(driver).click()
 
-    doc.link_terkirim(driver).click()
-    doc.link_download(driver).click()
-    delay(10)
+    doc.first_inbox_inboxpage(driver).click()
+    first = time.time()
+    doc.link_download_inbox(driver).click()
+    last = time.time() - first
+
+    print("Employee Account")
+    print(f"File size: {pdf_size}")
+    print(f"\ntime to download doc {time.strftime('%H:%M:%S', time.gmtime(last))}")

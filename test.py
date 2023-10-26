@@ -58,8 +58,8 @@ def test_web2_1_1(driver, **kwargs):
     doc.button_add_me(driver).click()
     doc.btn_detail_doc(driver).click()
 
-    if is_next is True:
-        if is_not_locked is True:
+    if is_next:
+        if is_not_locked:
             doc.btn_add_sign(driver).click()
 
         doc.btn_send_doc(driver).click()
@@ -108,7 +108,7 @@ def test_web2_2_1(driver, **kwargs):
     is_filled = kwargs.get('is_filled', False)
     test_web1_1(driver)
 
-    if is_filled is True:
+    if is_filled:
         doc.name_receiver(driver, 1).send_keys("wahyu")
         doc.email_receiver(driver, 1).send_keys("ditest6@tandatanganku.com")
 
@@ -276,7 +276,7 @@ def test_web2_3_4(driver, **kwargs):
 
     doc.btn_detail_doc(driver).click()
 
-    if is_full is True:
+    if is_full:
         doc.button_paraf(driver).click()
         delay(2)
         ActionChains(driver).drag_and_drop_by_offset(doc.paraf_box(driver), 10, 100).perform()
@@ -377,7 +377,7 @@ def test_web2_6_1(driver, **kwargs: Union[int, bool, list[int]]):
             form.doc_submit(driver).click()
             delay(2)
 
-            if is_not_seal is True:
+            if is_not_seal:
                 doc.check_seal_doc(driver).click()
             else:
                 Select(doc.select_email_seal(driver)).select_by_value("wahyu@digi-id.id")

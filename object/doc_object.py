@@ -360,10 +360,17 @@ def link_terkirim(driver) -> WebElement:
         "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/ul/li[2]/a")
 
 
-def link_download(driver) -> WebElement:
+def link_download_terkirim(driver) -> WebElement:
     return driver.find_element(
         By.XPATH,
         "/html/body/div[1]/div[2]/div[2]/div[12]/div/div/div/div/div/div/div[2]/div[4]/ul/li[3]/a"
+    )
+
+
+def link_download_inbox(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div[3]/div/div/div/div[3]/div/div/div/div/table/tbody/tr[7]/td/a"
     )
 
 
@@ -431,7 +438,7 @@ def check_materai(driver) -> WebElement:
 
 
 def select_document_type(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//select[@name='document_Type']")
+    return driver.find_element(By.XPATH, "//select[@name='document_Type' and @id='document_Type']")
 
 
 def button_add_meterai(driver) -> WebElement:
@@ -482,3 +489,11 @@ def signature(driver) -> WebElement:
         By.XPATH,
         "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[2]/div[3]/div/span/a"
     )
+
+
+def close_modal_sign(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//button[@id='bModal']")
+
+
+def first_inbox_inboxpage(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//div[@data-target='#demo1']")

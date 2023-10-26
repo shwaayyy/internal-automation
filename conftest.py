@@ -7,7 +7,7 @@ import time
 from jinja2 import Environment, FileSystemLoader
 
 # from datetime import datetime
-from pytest_html import extras
+from pytest_html import extras as extra
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -26,7 +26,7 @@ qa_team = {
     "latifah": "Latiah Ramadhana M.E."
 }
 
-app_env = url["prod"]
+app_env = url["devkube"]
 
 
 # robot = pyautogui
@@ -42,12 +42,14 @@ def driver_manager(driver):
         options.add_argument('--use-fake-ui-for-media-stream')
         options.add_experimental_option("useAutomationExtension", False)
         # options.add_argument('--use-fake-device-for-media-stream')
-        return webdriver.Chrome()
+        return webdriver.Chrome(options=options)
     elif driver == "firefox":
         return webdriver.Firefox()
 
 
 # How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html test.py
+# How to run test with spesific test name / number:
+# pytest -k [test_name] --html=reports/report.html --self-contained-html [file_name].py
 @pytest.fixture
 def driver():
     browser = driver_manager("chrome")
@@ -61,7 +63,7 @@ def driver():
     browser.close()
 
 
-@pytest.mark.optionalhook
+@pytest.hookimpl(optionalhook=True)
 def pytest_html_report_title(report):
     report.title = "Digisign automation Report"
 
@@ -97,7 +99,7 @@ def pytest_html_results_summary(prefix, summary, postfix):
 def pytest_runtest_makereport(item):
     outcome = yield
     report = outcome.get_result()
-    extra = getattr(report, "extra", [])
+    extras = getattr(report, "extras", [])
 
     if report.when == "call" or report.outcome != "passed":
         browser = item.funcargs.get("driver")
@@ -106,11 +108,11 @@ def pytest_runtest_makereport(item):
             try:
                 screenshot = browser.get_screenshot_as_png()
                 screenshot_b64 = base64.b64encode(screenshot).decode("utf-8", "ignore")
-                extra.append(extras.image(screenshot_b64, "Screenshot"))
+                extras.append(extra.image(screenshot_b64, "Screenshot"))
             except Exception as e:
                 print("Couldn't get screenshot")
                 print(e)
         else:
             print("No 'driver' key found in item.funcargs")
 
-    report.extra = extra
+    report.extras = extras

@@ -23,11 +23,15 @@ def msg_list_1(driver) -> WebElement:
 
 
 def date_get(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//td[contains(@class, 'DateCol')]")
+    return driver.find_element(By.XPATH, "/html/body/div[4]/div[10]/div[2]/div[2]/div[2]/div/div/div[1]/div[4]")
 
 
 def iframe_main_body(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='zv__TV-main__MSG__body__iframe']")
+    return driver.find_element(By.XPATH, "/html/body/div[4]/div[10]/div[2]/div[2]/div[2]/div/div/div[4]/iframe")
+
+
+def iframe_main_body_personal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "/html/body/div[4]/div[10]/div[2]/div[2]/iframe")
 
 
 def otp_selector(driver) -> WebElement:

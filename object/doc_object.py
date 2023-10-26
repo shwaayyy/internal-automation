@@ -14,12 +14,39 @@ def choose_account(driver) -> WebElement:
     return driver.find_element(By.XPATH, "/html/body/div/div/div/div/section/form/a[1]/div")
 
 
+def choose_account_personal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "/html/body/div/div/div/div/section/form/a[3]/div")
+
+
 def check_seal_doc(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//label[.//*[@id='ckseal']]")
 
 
+def select_email_seal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//select[@id='seal']")
+
+
+def seal_zone(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='imgsealer']")
+
+
+def button_lockseal(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='lockseal']")
+
+
 def nav_inbox(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//li[.//i[@class='ti-write']]")
+
+
+def nav_doc(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/a/span")
+
+
+def date_send_doc1(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div[3]/div/div/div/div[3]/div/div/div/div/table/tbody/tr[1]/td"
+    )
 
 
 def kotak_masuk(driver) -> WebElement:
@@ -27,8 +54,16 @@ def kotak_masuk(driver) -> WebElement:
         By.XPATH, "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/ul/li[3]/a")
 
 
-def name_first_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='name-1']")
+def button_add_receiver(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='add_re']")
+
+
+def name_receiver(driver, sort: int) -> WebElement:
+    return driver.find_element(By.XPATH, f"//*[@id='name-{sort}']")
+
+
+def email_receiver(driver, sort: int) -> WebElement:
+    return driver.find_element(By.XPATH, f"//*[@id='email-{sort}']")
 
 
 def btn_detail_doc(driver) -> WebElement:
@@ -57,7 +92,7 @@ def resizing_zone_1(driver) -> WebElement:
 
 def btn_set_email(driver) -> WebElement:
     return driver.find_element(
-        By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[16]/div/div/div/div/div/div[3]/button")
+        By.XPATH, "//button[text()='Set Email']")
 
 
 def btn_process_send_doc(driver) -> WebElement:
@@ -80,10 +115,6 @@ def sign_all_btn(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[@id='signnow']")
 
 
-def email_first_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='email-1']")
-
-
 def proses_btn(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[contains(@class, 'swal2-confirm')]")
 
@@ -98,6 +129,10 @@ def check_doc2(driver) -> WebElement:
 
 def check_doc3(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//label[@for='checkbox3']")
+
+
+def select_action(driver, sort: int):
+    return driver.find_element(By.XPATH, f"//select[@id='ck{sort}']")
 
 
 def check_doc4(driver) -> WebElement:
@@ -206,18 +241,6 @@ def select_action_need_2(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//select[@id='ck2']")
 
 
-def button_add_receiver(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='add_re']")
-
-
-def input_name_receiver_2(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='name-2']")
-
-
-def input_email_receiver_2(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='email-2']")
-
-
 def canvas(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='pdf-canvas']")
 
@@ -266,6 +289,13 @@ def button_paraf(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//button[contains(@onclick, 'adds_init()')]")
 
 
+def btn_set_email_paraf(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "//button[text()='Set Email']"
+    )
+
+
 def paraf_box(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='imginit-1']")
 
@@ -303,20 +333,8 @@ def btn_lihat_file_draf(driver) -> WebElement:
         By.XPATH, "/html/body/div[1]/div[2]/div[2]/div[12]/div/div/div/div/div/div/div[2]/div[3]/btn[2]")
 
 
-def sign_null(driver) -> WebElement:
+def swal(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='swal2-content']")
-
-
-def select_email_seal(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//select[@id='seal']")
-
-
-def imgsealer(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='imgsealer']")
-
-
-def button_lockseal(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//*[@id='lockseal']")
 
 
 def kotak_masuk_terakhir(driver) -> WebElement:
@@ -342,6 +360,20 @@ def link_terkirim(driver) -> WebElement:
         "/html/body/div[1]/div[1]/div[2]/div[3]/div[1]/nav/ul/li[2]/ul/li[2]/a")
 
 
+def link_download_terkirim(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div/div/div/div/div/div[2]/div[4]/ul/li[3]/a"
+    )
+
+
+def link_download_inbox(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[12]/div/div[3]/div/div/div/div[3]/div/div/div/div/table/tbody/tr[7]/td/a"
+    )
+
+
 def btn_eye(driver) -> WebElement:
     return driver.find_element(
         By.XPATH,
@@ -353,9 +385,10 @@ def swal_otp_none(driver) -> WebElement:
 
 
 def second_tandatangan(driver) -> WebElement:
-    return driver.find_element \
-        (By.XPATH,
-         "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[4]/div[3]/div/span")
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[4]/div[3]/div/span"
+    )
 
 
 def third_tandatangan(driver) -> WebElement:
@@ -401,23 +434,66 @@ def latest_inbox5(driver) -> WebElement:
 
 
 def check_materai(driver) -> WebElement:
-    return driver.find_element(
-        By.XPATH,
-        "/html/body/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/div[12]/div[1]/div/label/span"
-    )
+    return driver.find_element(By.XPATH, "//label[.//*[@id='checkemet']]")
 
 
 def select_document_type(driver) -> WebElement:
-    return driver.find_element(By.XPATH, "//select[@name='document_Type']")
+    return driver.find_element(By.XPATH, "//select[@name='document_Type' and @id='document_Type']")
 
 
 def button_add_meterai(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='addMeteraiBtn']")
 
 
-def kotak_materai(driver) -> WebElement:
+def meterai_zone1(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='imgmet-1']")
 
 
-def button_lock_meterai(driver) -> WebElement:
+def meterai_zone2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='imgmet-2']")
+
+
+def button_lock_meterai1(driver) -> WebElement:
     return driver.find_element(By.XPATH, "//*[@id='lockmet1']")
+
+
+def button_lock_meterai2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='lockmet2']")
+
+
+def check_materai_personal_acc(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div/div/div/div[2]/div[1]/div[10]/div[1]/div/label"
+    )
+
+
+def swal_kinddoc(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//div[contains(@tabindex, '-1')]")
+
+
+def cancel_meterai1(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='met1']")
+
+
+def cancel_meterai2(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='met2']")
+
+
+def filename(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//*[@id='filename']")
+
+
+def signature(driver) -> WebElement:
+    return driver.find_element(
+        By.XPATH,
+        "/html/body/div[1]/div[2]/div[2]/div[11]/div[6]/div/div/div[1]/div/div/div/div[2]/div[3]/div/span/a"
+    )
+
+
+def close_modal_sign(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//button[@id='bModal']")
+
+
+def first_inbox_inboxpage(driver) -> WebElement:
+    return driver.find_element(By.XPATH, "//div[@data-target='#demo1']")

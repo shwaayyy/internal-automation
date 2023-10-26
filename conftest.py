@@ -47,7 +47,7 @@ def driver_manager(driver):
         return webdriver.Firefox()
 
 
-# How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html test.py
+# How to run test you can run with CLI: pytest --html=reports/report.html --self-contained-html document_meterai_test.py
 # How to run test with spesific test name / number:
 # pytest -k [test_name] --html=reports/report.html --self-contained-html [file_name].py
 @pytest.fixture
